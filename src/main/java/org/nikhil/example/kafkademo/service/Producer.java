@@ -1,16 +1,20 @@
 package org.nikhil.example.kafkademo.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 @Service
 public class Producer {
 
+    @Value("${spring.kafka.topic.name}")
+    private String topicName;
+
     @Autowired
     KafkaTemplate<String, String> kafkaTemplate;
 
     public void sendMessageToTopic(String message) {
-        kafkaTemplate.send("test-topic", message);
+        kafkaTemplate.send(topicName, message);
     }
 }
